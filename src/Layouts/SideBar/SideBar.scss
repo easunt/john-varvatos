@@ -1,0 +1,26 @@
+.Sidebar{
+
+}
+
+.sidebar_container{
+    background-color: #dada60;
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 300px;
+}
+.sidebar_item:nth-child(1){
+    flex: 1 1 100%;
+} 
+.sidebar_item{
+    list-style: none;
+}
+
+
+
+.sidebar_item_detail{
+    float: left;
+    min-width: 100px;
+
+}

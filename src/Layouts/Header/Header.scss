@@ -1,0 +1,103 @@
+
+.header{
+    background-color: #EBEBE1;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding: 10px;
+
+}
+
+.header-logo{
+    float: left;
+}
+
+.header-container{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    list-style: none;
+}
+
+
+.header-item{
+    margin-right: 50px;
+    
+}
+
+#base {
+    background: white;
+    display: inline-block;
+    height: 55px;
+    margin-left: 20px;
+    margin-top: 50px;
+    position: relative;
+    width: 100px;
+  }
+#base:before {
+    border-bottom: 35px solid rgba(0,0,0,.7);
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    content: "";
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: -35px;
+    width: 0;
+}
+
+#base-in{
+    border-radius: 40;
+    width: 80;
+    height: 80;
+    background-color: black;
+    overflow: 'hidden';
+}
+
+.loadingBox{
+    .dim {
+        position:fixed; 
+        left:30px; 
+        top:60px; 
+        width:100px; 
+        height:55px; 
+        background:rgba(0,0,0,.7);
+    }
+    .circle {
+        position:fixed; 
+        left:78px; 
+        top:87px; 
+        transform:translate(-50%, -50%); 
+        width:28px; 
+        height:28px; 
+        border:8px solid #fff; 
+        // border-top:8px solid rgb(206, 206, 206); 
+        border-radius:50em;
+    }
+ 
+}
+
+.circle:hover{
+    position:fixed; 
+    left:78px; 
+    top:87px; 
+    transform:translate(-50%, -50%); 
+    width:28px; 
+    height:28px; 
+    border:10px solid #fff; 
+    border-top:10px solid rgb(207, 205, 205); 
+    border-radius:50em;
+    animation-name:spinCircle;
+    animation-duration:.9s;
+    animation-iteration-count:infinite;
+    animation-timing-function:linear;
+}
+@keyframes spinCircle {
+    from {
+        transform:translate(-50%, -50%) rotate(0);
+    }
+    to {
+        transform:translate(-50%, -50%) rotate(360deg);
+    }
+}
+
