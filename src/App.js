@@ -1,14 +1,24 @@
-import React, { Component } from 'react'
-import Main from './Layouts/Main/Main'
-import logo from './logo.svg';
+import React, { Component, Suspense } from 'react';
+import { Route, Routes } from "react-router-dom";
+import Home from './Home';
+import Header from './Layouts/Header/Header';
+import Footer from './Layouts/Footer/Footer';
+import SysMenu from './Layouts/SideBar/Section/SysMenu';
+import UserMenu from './Layouts/SideBar/Section/UserMenu';
 import './App.css';
 
 export class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Main />
-      </div>
+      <Suspense>
+        <Header />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="sys/*" element={<SysMenu />}/>          
+          <Route path="/user" element={<UserMenu />} />
+        </Routes>
+        <Footer />
+      </Suspense>
     );
   }
 }
