@@ -4,6 +4,7 @@ import AttributeModal from './AttributeModal';
 import AttributeRegModal from './AttributeRegModal';
 import styled from 'styled-components';
 import { FormOutlined } from '@ant-design/icons' // DeleteOutlined 삭제버튼
+import { HOST_URL } from '../../../config';
 
 
 
@@ -90,7 +91,7 @@ export class Attributes extends Component {
 
     getAttributes = async () => {
         try {
-            const response = await axios.get('http://localhost:8090/api/v1/attributes/');
+            const response = await axios.get(`${HOST_URL}/attributes/`);
             this.setState({
                 ...this.state,
                 attributes: response.data.data
@@ -105,7 +106,7 @@ export class Attributes extends Component {
         try {
             if (window.confirm('삭제ㄱ?')) {
                 const attributeId = e.target.value
-                await axios.delete(`http://localhost:8090/api/v1/attributes/${attributeId}`)
+                await axios.delete(`${HOST_URL}/attributes/${attributeId}`)
                 alert("삭.제.완.료.")
                 window.location.replace("/sys/attributes")
             }

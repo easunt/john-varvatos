@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import 'antd/dist/antd.css';
-// import '../SideBar.scss'
 import Attributes from '../../Main/Section/Attributes'
 import Capabilities from '../../Main/Section/Capabilities'
 import Devicetypes from '../../Main/Section/Devicetypes'
@@ -31,7 +30,6 @@ export class SysMenu extends Component {
         this.setState({
             menuName: menuSelect
         })
-        // console.log(this.state.menuName)
     };
 
 
@@ -94,5 +92,4 @@ export class SysMenu extends Component {
 
 
 export default SysMenu
-// ReactDOM.render(<SysMenu />, mountNode);
 

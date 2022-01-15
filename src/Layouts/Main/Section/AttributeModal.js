@@ -4,13 +4,16 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { CloseSquareOutlined } from '@ant-design/icons'
 
+import { attributeFormCreate } from '../../../Common/AttributeCommon'
+import { isEmpty } from '../../../Common/Common';
+import { HOST_URL } from '../../../config';
+
 
 export class AttributeModal extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            // id: this.props.id,
             readonly: true,
             submitVisible: false,
             visible: this.props.visible,
@@ -26,32 +29,6 @@ export class AttributeModal extends Component {
 
     }
 
-
-    isEmpty = (data) => {
-        if (typeof (data) === 'object') {
-            if (JSON.stringify(data) === '{}' || JSON.stringify(data) === '[]') {
-                return true;
-            } else if (!data) {
-                return true;
-            }
-            return false;
-        } else if (typeof (data) === 'string') {
-            if (!data.trim()) {
-                return true;
-            }
-            return false;
-        } else if (typeof (data) === 'number') {
-            return false;
-        } else if (typeof (data) === 'undefined') {
-            return true;
-        } else if (isNaN(data) === true) { // 신규 NaN 처리
-            return true;
-        } else if (data === 0) { // 신규 0 처리
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     handleClick = (e) => {
         e.preventDefault();
@@ -87,31 +64,8 @@ export class AttributeModal extends Component {
     putAttribute = async () => {
 
         let sendAttribute = this.state
-        if (sendAttribute.supported !== undefined) {
-            if (sendAttribute.supported.indexOf(',') === -1) {
-                const strSupported = sendAttribute.supported;
-                sendAttribute.supported = [];
-                sendAttribute.supported[0] = strSupported;
-
-            } else {
-                sendAttribute.supported = sendAttribute.supported.split(',')
-            }
-        }
-        if (sendAttribute.writable !== undefined) {
-            if (sendAttribute.writable.indexOf(',') === -1) {
-                const strWritable = sendAttribute.writable;
-                sendAttribute.writable = [];
-                sendAttribute.writable[0] = strWritable;
-
-            } else {
-                sendAttribute.writable = sendAttribute.writable.split(',')
-            }
-        }
-
-
-
-
-        await axios.put(`http://localhost:8090/api/v1/attributes/${this.props.id}`, sendAttribute)
+        attributeFormCreate(sendAttribute); //AttributeCommon(Attribute공통함수)
+        await axios.put(`${HOST_URL}/attributes/${this.props.id}`, sendAttribute)
 
         this.setState({
             submitVisible: false
@@ -122,16 +76,13 @@ export class AttributeModal extends Component {
     //수정btn 클릭시 
     handleSubmit = (e) => {
         e.preventDefault();
-        // const form = this.formRef.current
         this.putAttribute();
     }
 
 
     //Attribute Detail
     getAttribute = async () => {
-
-        // console.log(this.state.id)
-        const response = await axios.get(`http://localhost:8090/api/v1/attributes/${this.props.id}`)
+        const response = await axios.get(`${HOST_URL}/attributes/${this.props.id}`)
 
         this.setState({
             attribute: response.data.data
@@ -163,12 +114,12 @@ export class AttributeModal extends Component {
                                 style={this.state.submitVisible ? {} : { display: 'none' }}
                                 type="submit"
                                 value="저장" />
-                            <div style={this.isEmpty(id) ? { display: 'none' } : {}}>
+                            <div style={isEmpty(id) ? { display: 'none' } : {}}>
                                 <input
                                     defaultValue={id || ''}
                                     readOnly={true} />
                             </div>
-                            <div style={this.isEmpty(name) ? { display: 'none' } : {}}>
+                            <div style={isEmpty(name) ? { display: 'none' } : {}}>
                                 <input
                                     type="text"
                                     name="name"
@@ -176,7 +127,7 @@ export class AttributeModal extends Component {
                                     readOnly={this.state.readonly}
                                     onChange={this.handleChange} />
                             </div>
-                            <div style={this.isEmpty(mutability) ? { display: 'none' } : {}}>
+                            <div style={isEmpty(mutability) ? { display: 'none' } : {}}>
                                 <input
                                     name="mutability"
                                     defaultValue={this.state.submitVisible ? this.state.mutability : (mutability || '')}
@@ -184,7 +135,7 @@ export class AttributeModal extends Component {
                                     onChange={this.handleChange} />
                             </div>
                             {/* <div style={min !== null || min !== undefined  ? {}:{display:'none'}}><input value={min} readOnly /></div> */}
-                            <div style={this.isEmpty(min) ? { display: 'none' } : {}}>
+                            <div style={isEmpty(min) ? { display: 'none' } : {}}>
                                 <input
                                     type="number"
                                     name="min"
@@ -192,7 +143,7 @@ export class AttributeModal extends Component {
                                     readOnly={this.state.readonly}
                                     onChange={this.handleChange} />
                             </div>
-                            <div style={this.isEmpty(max) ? { display: 'none' } : {}}>
+                            <div style={isEmpty(max) ? { display: 'none' } : {}}>
                                 <input
                                     type="number"
                                     name="max"
@@ -200,7 +151,7 @@ export class AttributeModal extends Component {
                                     readOnly={this.state.readonly}
                                     onChange={this.handleChange} />
                             </div>
-                            <div style={this.isEmpty(step) ? { display: 'none' } : {}}>
+                            <div style={isEmpty(step) ? { display: 'none' } : {}}>
                                 <input
                                     type="number"
                                     name="step"
@@ -208,14 +159,14 @@ export class AttributeModal extends Component {
                                     readOnly={this.state.readonly}
                                     onChange={this.handleChange} />
                             </div>
-                            <div style={this.isEmpty(supported) ? { display: 'none' } : {}}>
+                            <div style={isEmpty(supported) ? { display: 'none' } : {}}>
                                 <input
                                     name="supported"
                                     defaultValue={this.state.submitVisible ? this.state.supported : (supported || '')}
                                     readOnly={this.state.readonly}
                                     onChange={this.handleChange} />
                             </div>
-                            <div style={this.isEmpty(writable) ? { display: 'none' } : {}}>
+                            <div style={isEmpty(writable) ? { display: 'none' } : {}}>
                                 <input
                                     name="writable"
                                     defaultValue={this.state.submitVisible ? this.state.writable : (writable || '')}

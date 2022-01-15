@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import { Route, Routes } from "react-router-dom";
-import Home from './Home';
+import Main from './Layouts/Main/Main';
 import Header from './Layouts/Header/Header';
 import Footer from './Layouts/Footer/Footer';
 import SysMenu from './Layouts/SideBar/Section/SysMenu';
@@ -13,7 +13,7 @@ export class App extends Component {
       <Suspense>
         <Header />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Main />} />
           <Route path="sys/*" element={<SysMenu />}/>          
           <Route path="/user" element={<UserMenu />} />
         </Routes>

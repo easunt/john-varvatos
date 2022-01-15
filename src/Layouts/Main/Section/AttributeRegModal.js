@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { CloseSquareOutlined } from '@ant-design/icons'
 
+import { attributeFormCreate } from '../../../Common/AttributeCommon'
+import { HOST_URL } from '../../../config';
 
 export class AttributeModal extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            // id: this.props.id,
             readonly: false,
             submitVisible: false,
             visible: this.props.visible
@@ -23,32 +24,6 @@ export class AttributeModal extends Component {
         this.handleClickModalClose = this.handleClickModalClose.bind(this);
     }
 
-
-    isEmpty = (data) => {
-        if (typeof (data) === 'object') {
-            if (JSON.stringify(data) === '{}' || JSON.stringify(data) === '[]') {
-                return true;
-            } else if (!data) {
-                return true;
-            }
-            return false;
-        } else if (typeof (data) === 'string') {
-            if (!data.trim()) {
-                return true;
-            }
-            return false;
-        } else if (typeof (data) === 'number') {
-            return false;
-        } else if (typeof (data) === 'undefined') {
-            return true;
-        } else if (isNaN(data) === true) { // 신규 NaN 처리
-            return true;
-        } else if (data === 0) { // 신규 0 처리
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
     handleChange = (e) => {
@@ -67,32 +42,12 @@ export class AttributeModal extends Component {
     postAttribute = async () => {
         try {
             let sendAttribute = { ...this.state }
-            if (sendAttribute.supported !== undefined) {
-                if (sendAttribute.supported.indexOf(',') === -1) {
-                    const strSupported = sendAttribute.supported;
-                    sendAttribute.supported = [];
-                    sendAttribute.supported[0] = strSupported;
 
-                } else {
-                    sendAttribute.supported = sendAttribute.supported.split(',')
-                }
-            }
-            if (sendAttribute.writable !== undefined) {
-                if (sendAttribute.writable.indexOf(',') === -1) {
-                    const strWritable = sendAttribute.writable;
-                    sendAttribute.writable = [];
-                    sendAttribute.writable[0] = strWritable;
+            attributeFormCreate(sendAttribute); //AttributeCommon(Attribute공통함수)
 
-                } else {
-                    sendAttribute.writable = sendAttribute.writable.split(',')
-                }
-            }
-
-
-            await axios.post(`http://localhost:8090/api/v1/attributes`, sendAttribute)
+            await axios.post(`${HOST_URL}/attributes`, sendAttribute)
 
             this.setState({
-                // ...this.state.attribute,
                 submitVisible: false
             })
             alert('등.록.완.료.')
@@ -104,7 +59,6 @@ export class AttributeModal extends Component {
     //등록btn 클릭시 
     handleSubmit = (e) => {
         // e.preventDefault(); //창 닫히면서 새로고침-> 목록 재조회
-        // const form = this.formRef.current
         this.postAttribute();
         this.setState({
             visible: false
@@ -112,21 +66,15 @@ export class AttributeModal extends Component {
 
     }
 
-    componentDidMount() {
-    }
-
 
     render() {
-        const { className } = this.props;
-        // let { id, name, mutability, min, max, step, supported, writable } = this.state;
-
+        const { className }= this.props;
 
         return (
             <>
                 <ModalOverlay visible={this.state.visible} />
                 <ModalWrapper className={className} tabIndex="-1" visible={this.state.visible}>
                     <ModalInner tabIndex="0" className="modal-inner">
-                        {/* {children} */}
                         <div className='close-box' style={{ position: 'fixed', top: '5px', right: '10px' }} ><CloseSquareOutlined onClick={this.handleClickModalClose} /></div>
 
                         <form onSubmit={this.handleSubmit}>
