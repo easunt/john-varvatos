@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
-import Header from '../Header/Header';
-import SideBar from '../SideBar/SideBar';
+import React, { Component } from 'react'
 
 export class Main extends Component {
     render() {
         return (
             <div>
-                <Header/>
-                <SideBar/>
+                Main
             </div>
         )
     }
